@@ -1,12 +1,12 @@
-package com.foxminded.service;
+package com.foxminded.consoleReader;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import com.foxminded.divisor.*;
+import com.foxminded.division.*;
 
 public class ConsoleReader {
 
-    public Division readCorrectData() {
+    public Division readData() {
         int dividend = 0;
         int divisor = 0;
         try (Scanner scanner = new Scanner(System.in)) {

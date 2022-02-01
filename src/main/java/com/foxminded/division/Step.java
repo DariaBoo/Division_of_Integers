@@ -1,4 +1,4 @@
-package com.foxminded.divisor;
+package com.foxminded.division;
 
 import java.util.Objects;
 
