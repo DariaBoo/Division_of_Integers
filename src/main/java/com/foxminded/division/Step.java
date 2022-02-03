@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class Step {
     private String value;
-    private int countOfSpaces;
+    private int countOfSymbols;
 
-    public Step(String value, int countOfSpaces) {
+    public Step(String value, int countOfSymbols) {
         this.value = value;
-        this.countOfSpaces = countOfSpaces;
+        this.countOfSymbols = countOfSymbols;
     }
 
     public String getValue() {
@@ -16,13 +16,13 @@ public class Step {
         return this.value;
     }
 
-    public int getCountOfSpaces() {
+    public int getCountOfSymbols() {
 
-        return this.countOfSpaces;
+        return this.countOfSymbols;
     }
 
     public int hashcode() {
-        return Objects.hash(value, countOfSpaces);
+        return Objects.hash(value, countOfSymbols);
     }
 
     @Override
@@ -37,6 +37,6 @@ public class Step {
             return false;
         }
         Step other = (Step) otherObject;
-        return Objects.equals(value, other.value) && countOfSpaces == other.countOfSpaces;
+        return Objects.equals(value, other.value) && countOfSymbols == other.countOfSymbols;
     }
 }

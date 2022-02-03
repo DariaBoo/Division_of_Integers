@@ -1,9 +1,9 @@
-package com.foxminded.facade;
+package com.foxminded.validator;
 
 import com.foxminded.division.*;
 import com.foxminded.formatter.*;
 
-public class CalculatorFacade {
+public class DataValidator {
     public String initCalculation(Division division) {
         String result = "";
         if (division.getDividend() < 0) {

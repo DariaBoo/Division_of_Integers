@@ -6,6 +6,7 @@ import com.foxminded.division.*;
 public class Calculator {
 
     private FormatterTools tools = new FormatterTools();
+    private final String quotientZero = "0";
 
     public void calculate(Division division) {
 
@@ -16,40 +17,43 @@ public class Calculator {
         division.setDividend(Math.abs(division.getDividend()));
         division.setDivisor(Math.abs(division.getDivisor()));
 
-        String dividendTemp = "";
+        StringBuilder dividendTemp = new StringBuilder();
         int dividendTempNumber;
-        StringBuilder quotientTemp = new StringBuilder();
+        StringBuilder quotient = new StringBuilder();
+        int lineLength;
 
         char[] digits = String.valueOf(division.getDividend()).toCharArray();
         for (int i = 0; i < digits.length; i++) {
-            dividendTemp += digits[i];
-            dividendTempNumber = Integer.parseInt(dividendTemp);
+            dividendTemp.append(digits[i]);
+            dividendTempNumber = Integer.parseInt(dividendTemp.toString());
+            lineLength = i + 1;
 
             if (dividendTempNumber >= division.getDivisor()) {
-                division.setDivisionSteps(new Step("_" + dividendTempNumber, i));
+                division.setDivisionSteps(new Step("_" + dividendTempNumber, lineLength));
 
                 String product = String.valueOf(dividendTempNumber / division.getDivisor() * division.getDivisor());
-                division.setDivisionSteps(new Step(product, i));
+                division.setDivisionSteps(new Step(product, lineLength));
 
                 String dash = tools.drawSymbols(product.length(), '-');
-                division.setDivisionSteps(new Step(dash, i));
+                division.setDivisionSteps(new Step(dash, lineLength));
 
-                quotientTemp.append(dividendTempNumber / division.getDivisor());
+                quotient.append(dividendTempNumber / division.getDivisor());
 
                 if (i == digits.length - 1) {
                     String reminder = String.valueOf(dividendTempNumber % division.getDivisor());
-                    division.setDivisionSteps(new Step(reminder, i));
+                    division.setDivisionSteps(new Step(reminder, lineLength));
                 }
             } else {
-                quotientTemp.append("0");
+                quotient.append(quotientZero);
                 if (i == digits.length - 1) {
-                    division.setDivisionSteps(new Step(String.valueOf(dividendTempNumber), i));
+                    division.setDivisionSteps(new Step(String.valueOf(dividendTempNumber), lineLength));
                 }
             }
-            dividendTemp = String.valueOf(dividendTempNumber % division.getDivisor());
+            dividendTemp.setLength(0);
+            dividendTemp.append(dividendTempNumber % division.getDivisor());
 
         }
-        String result = quotientTemp.toString().replaceFirst("^0+(?!$)", "");
+        String result = quotient.toString().replaceFirst("^0+(?!$)", "");
         division.setQuotient(result);
     }
 }
