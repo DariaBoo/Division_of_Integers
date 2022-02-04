@@ -1,11 +1,9 @@
 package com.foxminded.validator;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import com.foxminded.division.*;
 
-import com.foxminded.validator.DataValidator;
 
 public class DataValidatorTest {
     DataValidator validator = new DataValidator();
@@ -32,7 +30,7 @@ public class DataValidatorTest {
     @Test
     public void initCalculation_shouldReturnErrorMessage_whenInputDividendLessThanDivisor() {     
         division = new Division(3,985);
-        String expected = division.getDividend() + " divided by " + division.getDivisor() + " is equals 0.";
+        String expected = "3 divided by 985 is equals 0.";
         assertEquals(expected, validator.initCalculation(division));
     }
     @Test
@@ -42,7 +40,13 @@ public class DataValidatorTest {
         assertEquals(expected, validator.initCalculation(division));
     }
     @Test
-    public void initCalculation_shouldReturnErrorMessage_whenInputNegativeDividendLessThanDivisor1() {     
+    public void initCalculation_shouldReturnErrorMessage_whenInputDividendLessThanNegativeDivisor() {     
+        division = new Division(3,-985);
+        String expected = "Enter only positive numbers.";
+        assertEquals(expected, validator.initCalculation(division));
+    }
+    @Test
+    public void initCalculation_shouldReturnErrorMessage_whenInputPositiveDividendGreaterThanDivisor() {     
         division = new Division(985,3);
         String expected = "_985|3\r\n"
                 + " 9  |---\r\n"
