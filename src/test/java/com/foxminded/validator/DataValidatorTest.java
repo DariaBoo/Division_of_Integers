@@ -11,7 +11,7 @@ class DataValidatorTest {
     private DataValidator validator = new DataValidator();
     private Division division;
     
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index}. When input dividend {0} and divisor {1} will return the message: ''{2}''.")
     @CsvSource({
         "-985,3, Enter only positive numbers.",
         "985, -3, Enter only positive numbers.",
