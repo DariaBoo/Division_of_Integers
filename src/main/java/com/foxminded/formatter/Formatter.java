@@ -7,9 +7,8 @@ public class Formatter {
     private FormatterTools tools = new FormatterTools();
     private Calculator calculator = new Calculator();
     private Division division;
-    private final int LINEFEED = 2; // 2 - means '%n' in the end of resultTemp string from addIndents() method
-    private final int UNDERSCORE = 1; // 1 - means '_' at the beginning
-    private int beforeLineFeed;
+    private int resultTempLength;
+    private final int indentCorrection = 1; // 1 - means '_' at the beginning
 
     public Formatter(Division division) {
         this.division = division;
@@ -29,43 +28,41 @@ public class Formatter {
             } else if (i == 2) {
                 resultTemp = modifyThirdLine(resultTemp, division.getQuotient());
             }
-            result.append(resultTemp);
+            result.append(resultTemp).append("\n");
         }
         return result.toString();
     }
 
     private String addIndents(Step step) {
-        int additionalSpaceInsteadOfUnderscoreInAFirstLine = 1;
-        int i = step.getCountOfSymbols() + additionalSpaceInsteadOfUnderscoreInAFirstLine;
-        String result = String.format("%" + i + "s%n", step.getValue());
+        int i = step.getCountOfSymbols() + indentCorrection;
+        String result = String.format("%" + i + "s", step.getValue());
         return result;
     }
 
     private String modifyFirstLine(String resultTemp) {
         StringBuilder result = new StringBuilder(resultTemp);
-        int afterUnderscore = 1;
-        beforeLineFeed = resultTemp.length() - LINEFEED;
-        result.replace(afterUnderscore, beforeLineFeed, (division.getDividend() + "|" + division.getDivisor()));
+        int startAfterUnderscore = 1;
+        int end = resultTemp.length();
+        result.replace(startAfterUnderscore, end, (division.getDividend() + "|" + division.getDivisor()));
         return result.toString();
     }
 
     private String modifySecondLine(String resultTemp, String quotient) {
         StringBuilder result = new StringBuilder(resultTemp);
-        int numberOfSpaces = tools.countOfDigits(division.getDividend()) + UNDERSCORE
-                - (resultTemp.length() - LINEFEED);
+        resultTempLength = resultTemp.length();
+        int numberOfSpaces = tools.countOfDigits(division.getDividend()) + indentCorrection - resultTempLength;
         String spaces = tools.drawSymbols(numberOfSpaces, ' ');
         String dashes = tools.drawSymbols(quotient.length(), '-');
-        beforeLineFeed = resultTemp.length() - LINEFEED;
-        result.insert(beforeLineFeed, spaces + "|" + dashes);
+        result.insert(resultTempLength, spaces + "|" + dashes);
         return result.toString();
     }
 
     private String modifyThirdLine(String resultTemp, String quotient) {
         StringBuilder result = new StringBuilder(resultTemp);
+        resultTempLength = resultTemp.length();
         String spaces = tools.drawSymbols(
-                (tools.countOfDigits(division.getDividend()) + UNDERSCORE - (resultTemp.length() - LINEFEED)), ' ');
-        beforeLineFeed = resultTemp.length() - LINEFEED;
-        result.insert(beforeLineFeed, spaces + "|" + quotient);
+                (tools.countOfDigits(division.getDividend()) + indentCorrection - resultTempLength), ' ');
+        result.insert(resultTempLength, spaces + "|" + quotient);
         return result.toString();
     }
 }

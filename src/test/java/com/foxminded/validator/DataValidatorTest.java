@@ -2,62 +2,41 @@ package com.foxminded.validator;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import com.foxminded.division.*;
 
-
-public class DataValidatorTest {
-    DataValidator validator = new DataValidator();
-    Division division;
-
-    @Test
-    public void initCalculation_shouldReturnErrorMessage_whenInputNegativeDividend() {     
-        division = new Division(-985,3);
-        String expected = "Enter only positive numbers.";
-        assertEquals(expected, validator.initCalculation(division));
+class DataValidatorTest {
+    private DataValidator validator = new DataValidator();
+    private Division division;
+    
+    @ParameterizedTest
+    @CsvSource({
+        "-985,3, Enter only positive numbers.",
+        "985, -3, Enter only positive numbers.",
+        "-985, -3, Enter only positive numbers.",
+        "3, 985, 3 divided by 985 is equals 0.",
+        "-3, 985, Enter only positive numbers.",
+        "3, -985, Enter only positive numbers."
+    })
+    void initCalculation_shouldReturnErrorMessage_whenInputIncorrectData(int dividend, int divisor, String message) {      
+        assertEquals(message, validator.initCalculation(new Division(dividend, divisor)));
     }
+    
     @Test
-    public void initCalculation_shouldReturnErrorMessage_whenInputNegativeDivisor() {     
-        division = new Division(985,-3);
-        String expected = "Enter only positive numbers.";
-        assertEquals(expected, validator.initCalculation(division));
-    }
-    @Test
-    public void initCalculation_shouldReturnErrorMessage_whenInputNegativeDividendAndDivisor() {     
-        division = new Division(-985,-3);
-        String expected = "Enter only positive numbers.";
-        assertEquals(expected, validator.initCalculation(division));
-    }
-    @Test
-    public void initCalculation_shouldReturnErrorMessage_whenInputDividendLessThanDivisor() {     
-        division = new Division(3,985);
-        String expected = "3 divided by 985 is equals 0.";
-        assertEquals(expected, validator.initCalculation(division));
-    }
-    @Test
-    public void initCalculation_shouldReturnErrorMessage_whenInputNegativeDividendLessThanDivisor() {     
-        division = new Division(-3,985);
-        String expected = "Enter only positive numbers.";
-        assertEquals(expected, validator.initCalculation(division));
-    }
-    @Test
-    public void initCalculation_shouldReturnErrorMessage_whenInputDividendLessThanNegativeDivisor() {     
-        division = new Division(3,-985);
-        String expected = "Enter only positive numbers.";
-        assertEquals(expected, validator.initCalculation(division));
-    }
-    @Test
-    public void initCalculation_shouldReturnErrorMessage_whenInputPositiveDividendGreaterThanDivisor() {     
-        division = new Division(985,3);
-        String expected = "_985|3\r\n"
-                + " 9  |---\r\n"
-                + " -  |328\r\n"
-                + " _8\r\n"
-                + "  6\r\n"
-                + "  -\r\n"
-                + " _25\r\n"
-                + "  24\r\n"
-                + "  --\r\n"
-                + "   1\r\n";
+    void initCalculation_shouldReturnCorrectResult_whenInputCorrectData() {
+        division = new Division(985, 3);
+        String expected = "_985|3\n"
+                + " 9  |---\n"
+                + " -  |328\n"
+                + " _8\n"
+                + "  6\n"
+                + "  -\n"
+                + " _25\n"
+                + "  24\n"
+                + "  --\n"
+                + "   1\n";
         assertEquals(expected, validator.initCalculation(division));
     }
 }
