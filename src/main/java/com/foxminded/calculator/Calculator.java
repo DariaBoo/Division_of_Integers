@@ -1,11 +1,11 @@
 package com.foxminded.calculator;
 
-import com.foxminded.formatter.*;
+import com.foxminded.utils.FormatterUtil;
 import com.foxminded.division.*;
 
 public class Calculator {
 
-    private FormatterTools tools = new FormatterTools();
+    private FormatterUtil util = new FormatterUtil();
     private final String quotientZero = "0";
 
     public void calculate(Division division) {
@@ -34,7 +34,7 @@ public class Calculator {
                 String product = String.valueOf(dividendTempNumber / division.getDivisor() * division.getDivisor());
                 division.setDivisionSteps(new Step(product, lineLength));
 
-                String dash = tools.drawSymbols(product.length(), '-');
+                String dash = util.drawSymbols(product.length(), '-');
                 division.setDivisionSteps(new Step(dash, lineLength));
 
                 quotient.append(dividendTempNumber / division.getDivisor());

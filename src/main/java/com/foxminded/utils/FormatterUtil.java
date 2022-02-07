@@ -1,6 +1,6 @@
-package com.foxminded.formatter;
+package com.foxminded.utils;
 
-public class FormatterTools {
+public class FormatterUtil {
     
     public String drawSymbols(int countOfSymbols, char symbol) {
         StringBuilder result = new StringBuilder();

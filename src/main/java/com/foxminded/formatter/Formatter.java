@@ -2,9 +2,10 @@ package com.foxminded.formatter;
 
 import com.foxminded.calculator.Calculator;
 import com.foxminded.division.*;
+import com.foxminded.utils.FormatterUtil;
 
 public class Formatter {
-    private FormatterTools tools = new FormatterTools();
+    private FormatterUtil util = new FormatterUtil();
     private Calculator calculator = new Calculator();
     private Division division;
     private int resultTempLength;
@@ -50,9 +51,9 @@ public class Formatter {
     private String modifySecondLine(String resultTemp, String quotient) {
         StringBuilder result = new StringBuilder(resultTemp);
         resultTempLength = resultTemp.length();
-        int numberOfSpaces = tools.countOfDigits(division.getDividend()) + indentCorrection - resultTempLength;
-        String spaces = tools.drawSymbols(numberOfSpaces, ' ');
-        String dashes = tools.drawSymbols(quotient.length(), '-');
+        int numberOfSpaces = util.countOfDigits(division.getDividend()) + indentCorrection - resultTempLength;
+        String spaces = util.drawSymbols(numberOfSpaces, ' ');
+        String dashes = util.drawSymbols(quotient.length(), '-');
         result.insert(resultTempLength, spaces + "|" + dashes);
         return result.toString();
     }
@@ -60,8 +61,8 @@ public class Formatter {
     private String modifyThirdLine(String resultTemp, String quotient) {
         StringBuilder result = new StringBuilder(resultTemp);
         resultTempLength = resultTemp.length();
-        String spaces = tools.drawSymbols(
-                (tools.countOfDigits(division.getDividend()) + indentCorrection - resultTempLength), ' ');
+        String spaces = util.drawSymbols(
+                (util.countOfDigits(division.getDividend()) + indentCorrection - resultTempLength), ' ');
         result.insert(resultTempLength, spaces + "|" + quotient);
         return result.toString();
     }

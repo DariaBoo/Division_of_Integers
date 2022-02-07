@@ -1,11 +1,13 @@
-package com.foxminded.formatter;
+package com.foxminded.utils;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class FormatterToolsTest {   
-    private FormatterTools tools = new FormatterTools();
+import com.foxminded.utils.FormatterUtil;
+
+class FormatterUtilTest {   
+    private FormatterUtil util = new FormatterUtil();
     
     @ParameterizedTest(name = "{index}. When input symbol ''{1}'' counting {0} times will return result ''{2}''.")
     @CsvSource({
@@ -20,6 +22,6 @@ class FormatterToolsTest {
     })
     
     void drawSymbols_shouldReturnStringResult_whenInputCountOfSymbolsAndSymbol(int countOfSymbols, char symbol, String result) {
-        assertEquals(result, tools.drawSymbols(countOfSymbols, symbol));
+        assertEquals(result, util.drawSymbols(countOfSymbols, symbol));
     }
 }
